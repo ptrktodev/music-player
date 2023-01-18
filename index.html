@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+<style>
+  body {
+  height: 100vh;
+  font-family: "Poppins", Arial, sans-serif;
+  color: rgb(0, 0, 0);
+  background: linear-gradient(
+    209deg,
+    rgba(185, 29, 153, 1) 41%,
+    rgba(4, 213, 255, 1) 93%
+  );
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+img {
+  max-width: 100%;
+}
+
+.card {
+  width: 500px;
+  height: 650px;
+  border: 2px solid rgba(128, 255, 38, 0.877);
+  margin: 0 auto;
+  background: rgb(255, 255, 255);
+  border-radius: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 1.244rem;
+  padding: 40px;
+  text-align: center;
+  flex-direction: column;
+}
+
+.upper {
+  max-width: 100%;
+  margin-bottom: 30px;
+}
+
+img {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  width: 60%;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+
+  transition: 0.6s ease-in-out;
+}
+
+img:hover {
+  transform: scale(1.1);
+}
+
+h3 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+h4 {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.edit-progress{
+  width: 240px;
+  margin-bottom: 20px;
+}
+
+.progress {
+  width: 100%;
+}
+
+.volume {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0px;
+}
+
+.volume img {
+  width: 5%;
+  position: relative;
+}
+
+.icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.icons img {
+  width: 10%;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.icons img:hover {
+  transform: scale(1.1);
+}
+
+</style>
+    <title>Player Music | @ptrk.dev</title>
+  </head>
+  <body>
+    <div class="card">
+      <div class="upper">
+        <p>Developed by <strong>@ptrk.dev</strong></p>
+        <img src="{%IMAGE%}" alt="" class="img" id="cover"/>
+        <h3 class="title" id="title">{%NAME%}</h3>
+        <h4 class="artist" id="artist">{%ARTIST%}</h4>
+      </div>
+      <div class="edit-progress">
+        <input type="range" min="0" max="100" step="1" value="0" class="progress" />
+      </div>
+      <div class="volume">
+        <p>🔈</p>
+        <input type="range" min="0" max="100" step="1" value="20" class="volume_slide" />
+        <p>🔊</p>
+      </div>
+      <div>
+        {%ICONS%}
+      </div>
+    </div>
+
+    <script>
+
+      const cover = document.querySelector('#cover')
+      const title = document.querySelector('#title')
+      const artist = document.querySelector('#artist')
+
+      async function getMusics() {
+          try {
+
+            const response = await axios.get('/musics');
+            console.log(response);
+            title.innerHTML =  response.data[0].name
+            artist.innerHTML =  response.data[0].artist
+            cover.src =  response.data[0].img
+          
+
+          } catch (error) {
+            console.error(error);
+       }}
+
+      setTimeout(x => {
+        getMusics()
+      }, 1000)
+
+    </script>
+  </body>
+</html>
